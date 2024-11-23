@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { set, ref} from 'firebase/database';
-import { db } from '../firebaseConfig'
+import { db } from '../../../firebaseConfig'
 
 
 const lampNodes = [
@@ -11,18 +11,15 @@ const lampNodes = [
   
 ];
 
-export default function PanelControl(){
+export default function LampControls() {
   const handleUpdate = (nodePath, state) => {
     set(ref(db, nodePath), state)
-    .then(() => {
-      alert(`${nodePath} has updated to ${state}`);
-    })
-    .catch((error) => {
-      console.error(`${nodePath} cannot update because of error:`, error);
-    });
-    
-    return (
-      <div style={{ padding: "20px" }}>
+      .then(() => alert(`${nodePath} updated to ${state}`))
+      .catch((error) => console.error("Error updating Firebase:", error));
+  };
+
+  return (
+    <div style={{ padding: "20px" }}>
       <h1>Lamp Controls</h1>
       {lampNodes.map(({ nodePath, label }) => (
         <div key={nodePath} style={{ marginBottom: "20px" }}>
@@ -48,6 +45,5 @@ export default function PanelControl(){
         </div>
       ))}
     </div>
-    )
-  }
+  );
 }
