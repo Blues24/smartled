@@ -1,0 +1,63 @@
+/* Tombol utama untuk ON/OFF */
+.button {
+    padding: 10px;
+    width: 80px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .button.on {
+    background-color: green;
+    color: white;
+  }
+  
+  .button.off {
+    background-color: red;
+    color: white;
+  }
+  
+  .button:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Tombol Update */
+  .updateButton {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .updateButton:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+  }
+  
+  .updateButton:hover:not(:disabled) {
+    transform: scale(1.1);
+  }
+  
+  /* Kontainer utama */
+  .container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  /* Error section */
+  .errors {
+    margin-top: 20px;
+    color: red;
+  }
+  
+  .errors ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  

@@ -1,49 +1,97 @@
 "use client";
 
-import React from 'react';
-import { set, ref} from 'firebase/database';
-import { db } from '../../../firebaseConfig'
+import { useState } from "react";
+import { ref, set, get } from "firebase/database";
+import { db } from "../../../firebaseConfig";
+import styles from "./LampControls.module.css";
 
+const LampControls = () => {
+  const lampNodes = [
+    { nodePath: "LAMPS/L1", label: "Lampu 1" },
+    { nodePath: "LAMPS/L2", label: "Lampu 2" },
+    { nodePath: "LAMPS/L3", label: "Lampu 3" },
+    { nodePath: "LAMPS/L4", label: "Lampu 4" }
+  ];
 
-const lampNodes = [
-  {nodePath: "LAMPS/L1", label: "Lamp 1"},
-  {nodePath: "LAMPS/L2", label: "Lamp 2"},
-  
-];
+  const [lampStates, setLampStates] = useState({});
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [errors, setErrors] = useState([]);
 
-export default function LampControls() {
-  const handleUpdate = (nodePath, state) => {
-    set(ref(db, nodePath), state)
-      .then(() => alert(`${nodePath} updated to ${state}`))
-      .catch((error) => console.error("Error updating Firebase:", error));
+  // Handle perubahan status lampu
+  const handleSelection = (nodePath, newState) => {
+    setLampStates((prev) => ({
+      ...prev,
+      [nodePath]: newState,
+    }));
+  };
+
+  // Fungsi untuk meng-update status di Firebase
+  const handleUpdate = async () => {
+    setIsUpdating(true);
+    setErrors([]); // Bersihkan error sebelumnya
+
+    try {
+      // Validasi apakah nodePath ada di Firebase
+      const validationPromises = lampNodes.map(async ({ nodePath }) => {
+        const snapshot = await get(ref(db, nodePath));
+        if (!snapshot.exists()) {
+          throw new Error(`NodePath "${nodePath}" tidak ditemukan di database.`);
+        }
+      });
+
+      await Promise.all(validationPromises);
+
+      // Jika validasi berhasil, lakukan pembaruan
+      const updatePromises = Object.keys(lampStates).map((nodePath) =>
+        set(ref(db, nodePath), lampStates[nodePath])
+      );
+
+      await Promise.all(updatePromises);
+
+      alert("Data berhasil diperbarui di Firebase!");
+    } catch (err) {
+      console.error("Error saat memperbarui Firebase:", err);
+      setErrors((prev) => [...prev, err.message]);
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Lamp Controls</h1>
+    <div className={styles.container}>
+      <h1>Demo Kontrol Lampu</h1>
       {lampNodes.map(({ nodePath, label }) => (
         <div key={nodePath} style={{ marginBottom: "20px" }}>
           <p>{label}</p>
-          <label>
-            <input
-              type="radio"
-              name={nodePath}
-              value="true"
-              onChange={() => handleUpdate(nodePath, true)}
-            />
-            ON
-          </label>
-          <label style={{ marginLeft: "10px" }}>
-            <input
-              type="radio"
-              name={nodePath}
-              value="false"
-              onChange={() => handleUpdate(nodePath, false)}
-            />
-            OFF
-          </label>
+          <button
+            className={`${styles.button} ${
+              lampStates[nodePath] ? styles.on : styles.off
+            }`}
+            onClick={() => handleSelection(nodePath, !lampStates[nodePath])}
+          >
+            {lampStates[nodePath] ? "ON" : "OFF"}
+          </button>
         </div>
       ))}
+      <button
+        onClick={handleUpdate}
+        disabled={isUpdating}
+        className={styles.updateButton}
+      >
+        {isUpdating ? "Memperbarui..." : "Update"}
+      </button>
+      {errors.length > 0 && (
+        <div className={styles.errors}>
+          <h3>Error:</h3>
+          <ul>
+            {errors.map((error, index) => (
+              <li key={index}>{error}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default LampControls;
