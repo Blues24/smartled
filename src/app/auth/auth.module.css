@@ -1,32 +1,61 @@
-.auth-container {
+.authContainer {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+    height: 50vh;
+    background-color: #24283b; /* Dark background */
 }
 
-.auth-form {
+.authForm {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 300px;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
+    margin: 0;
+    border: 1px solid #414868; /* Border color */
+    background-color: #1a1b26; /* Form background */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+    border-radius: 10px;
+    color: #c0caf5; /* Text color */
 }
 
-.auth-input {
+.authForm input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #414868; /* Input border color */
+    background-color: #1a1b26; /* Input background */
+    color: #c0caf5; /* Input text color */
+    border-radius: 5px;
+}
+
+.authForm button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    background-color: #7aa2f7; /* Button background */
+    color: #1a1b26; /* Button text color */
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.authForm button:hover {
+    background-color: #2ac3de; /* Button hover background */
+    transform: scale(1.05);
+}
+
+.authInput {
     margin-bottom: 10px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 3px;
 }
 
-.auth-button {
+.authButton {
     padding: 10px;
     border: none;
     border-radius: 3px;
@@ -35,11 +64,11 @@
     cursor: pointer;
 }
 
-.auth-button:hover {
+.authButton:hover {
     background-color: #005bb5;
 }
 
-.auth-error {
+.authError {
     color: red;
     margin-top: 10px;
 }

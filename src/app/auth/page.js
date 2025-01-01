@@ -20,8 +20,8 @@ export default function Auth(){
     };
     return (
         <div className={styles.authContainer}>
-        <h2>Enter PIN</h2>
         <form onSubmit={handlePin} className={styles.authForm}>
+        <h2>Enter PIN</h2>
           <input
             type="password"
             value={pin}
