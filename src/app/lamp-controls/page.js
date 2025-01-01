@@ -58,39 +58,43 @@ const LampControls = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.title}>
       <h1>Demo Kontrol Lampu</h1>
-      {lampNodes.map(({ nodePath, label }) => (
-        <div key={nodePath} style={{ marginBottom: "20px" }}>
-          <p>{label}</p>
-          <button
-            className={`${styles.button} ${
-              lampStates[nodePath] ? styles.on : styles.off
-            }`}
-            onClick={() => handleSelection(nodePath, !lampStates[nodePath])}
-          >
-            {lampStates[nodePath] ? "ON" : "OFF"}
-          </button>
-        </div>
-      ))}
-      <button
-        onClick={handleUpdate}
-        disabled={isUpdating}
-        className={styles.updateButton}
-      >
-        {isUpdating ? "Memperbarui..." : "Update"}
-      </button>
-      {errors.length > 0 && (
-        <div className={styles.errors}>
-          <h3>Error:</h3>
-          <ul>
-            {errors.map((error, index) => (
-              <li key={index}>{error}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
+     <div className={styles.gridContainer}>
+       {lampNodes.map(({ nodePath, label }) => (
+         <div key={nodePath} className={styles.gridItems}>
+           <p>{label}</p>
+           <button
+             className={`${styles.button} ${
+               lampStates[nodePath] ? styles.on : styles.off
+             }`}
+             onClick={() => handleSelection(nodePath, !lampStates[nodePath])}
+           >
+             {lampStates[nodePath] ? "ON" : "OFF"}
+           </button>
+         </div>
+       ))}
+       <div className={styles.gridBtnUpdate}>
+        <button
+          onClick={handleUpdate}
+          disabled={isUpdating}
+          className={styles.updateButton}
+        >
+          {isUpdating ? "Memperbarui..." : "Update"}
+        </button>
+       </div>
+       {errors.length > 0 && (
+         <div className={styles.errors}>
+           <h3>Error:</h3>
+           <ul>
+             {errors.map((error, index) => (
+               <li key={index}>{error}</li>
+             ))}
+           </ul>
+         </div>
+       )}
+     </div>
+    </div> 
   );
 };
 

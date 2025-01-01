@@ -3,7 +3,7 @@ export default function HomePage(){
     <div style={{ textAlign: "center"}}>
       <h2>Welcome to my App</h2>
       <p>Made with ♥  </p>
-      <a href="/lamp-controls"
+      <a href="/auth"
          style={{
           display: "inline-block",
           marginTop: "20px",

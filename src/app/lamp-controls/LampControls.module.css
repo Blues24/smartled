@@ -8,7 +8,13 @@
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
   }
-  
+  .title{
+    display: block;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+
+  }
   .button.on {
     background-color: green;
     color: white;
@@ -45,11 +51,21 @@
   }
   
   /* Kontainer utama */
-  .container {
-    padding: 20px;
-    text-align: center;
+  .gridContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
-  
+  .gridItems{
+    display: flex;
+    flex-direction: column;
+    align-items:  center;
+  }
+  .gridBtnUpdate{
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   /* Error section */
   .errors {
     margin-top: 20px;
